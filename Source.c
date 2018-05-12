@@ -58,7 +58,30 @@ void PodstawoweOperacjeBitowe(unsigned short a, unsigned short b) {
 unsigned short Zmien(unsigned short liczba) {
 	printf("Wynik ~%hu to: %hu czyli \t", liczba, ~liczba);
 	WypiszBitowo(~liczba);
+	return ~liczba;
 }
+
+unsigned short ZamienPrzedzial (unsigned short liczba, int start, int koniec){
+	unsigned short maska = 0x1;
+    while(start!=0){
+        maska = maska << 1;
+        start=start -1;
+    }
+
+	while (maska != 0) {
+            liczba=liczba^maska;
+            maska = maska << 1;
+	}
+ return liczba;
+}
+
+unsigned short ROR(unsigned short liczba, int n){
+while(liczba!=0){
+    liczba = liczba << n;
+    WypiszBitowo(liczba);
+}
+}
+
 void main() {
 	unsigned short z = 44153;
 
@@ -69,8 +92,13 @@ void main() {
 
 	PodstawoweOperacjeBitowe(z, z);
 
-	printf("Liczba %d po negacji to %hu", z, Zmien(z));
+	printf("Liczba %d po negacji to %hu \n", z, Zmien(z));
 
+	printf("Negacja liczby: %hu w wybranym przedziale przedziale to: %hu \n",z, ZamienPrzedzial(z,0,16));
+	// 0 oznacza bit wartości 1
+
+	printf("Cykliczne przenuniecie bitow: \n");
+    ROR(z,1);
 
 
 
