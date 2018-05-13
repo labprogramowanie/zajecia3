@@ -99,7 +99,7 @@ void main() {
 
 	printf("Cykliczne przenuniecie bitow: \n");
     ROR(z,1);
-
+ 
 
 
 
