@@ -62,48 +62,106 @@ unsigned short Zmien(unsigned short liczba) {
 }
 
 unsigned short ZamienPrzedzial (unsigned short liczba, int start, int koniec){
-	unsigned short maska = 0x1;
-	int b=start;
-    while(start!=0){
-        maska = maska << 1;
-        start=start -1;
-    }
+	unsigned short maska = (~0);
+	maska = (~(maska<<(koniec-start+1)))<<(start-1);
+// WypiszBitowo(maska);
 
-	while ((b-1) != koniec) {
-            liczba=liczba^maska;
-            maska = maska << 1;
-            b++;
-	}
+	printf("Wprowadzona liczba bitowo to: \t");
+	WypiszBitowo(liczba);
+
+    liczba = liczba^maska;
+
+    printf("Liczba po negacji bitowej: \t");
+	WypiszBitowo(liczba);
+
  return liczba;
 }
 
 unsigned short ROR(unsigned short liczba, int n){
-while(liczba!=0){
-    liczba = liczba << n;
+    int end = (16/n)+1;
+
+    printf("\nWPROWADZONA LICZBA: \n");
     WypiszBitowo(liczba);
+
+for (int i=1;i<end;i++){
+    unsigned short templiczba= liczba << (i*n);
+    unsigned short tempmaska= liczba >> (16-(n*i));
+    unsigned short wynik= templiczba|tempmaska;
+    WypiszBitowo(wynik);
 }
+    WypiszBitowo(liczba);
 }
 
 void main() {
-	unsigned short z = 44153;
-
-	printf("Rozmiar unsigned short to: %hu \n", IleBitowUnsignedShort());
-
-	printf("Liczba %d bitowo to: \t",z);
-	WypiszBitowo(44153); // Przeliczenie liczby na binarna
-
-	PodstawoweOperacjeBitowe(z, z);
-
-	printf("Liczba %d po negacji to %hu \n", z, Zmien(z));
-
-	printf("Negacja liczby: %hu w wybranym przedziale przedziale to: %hu \n",z, ZamienPrzedzial(37,2,4));
-	// 0 oznacza bit wartoœci 1
-
-	printf("Cykliczne przenuniecie bitow: \n");
-    ROR(z,1);
+    char c;
+	unsigned short zmienna1;
+	unsigned short zmienna2;
+	int liczba1;
+	int liczba2;
 
 
 
 
+		while(5){
+    printf("********************** MENU *********************\n");
+    printf("1. Sprawdzenie rozmiaru Unsigned Short\n");
+	printf("2. Zamiana liczby dziesietnej na bitowa\n");
+	printf("3. Operacje bitowe na dwoch liczbach dziesietnych\n");
+	printf("4. Negacja bitowa liczby dziesietnej\n");
+	printf("5. Negacja bitowa liczby w przedziale bitow\n");
+	printf("6. Cykliczne przesuwanie bitow liczby dziesietnej\n");
+    scanf("%s",&c);
 
+            switch(c){
+
+
+
+                case '1':
+                        printf("Rozmiar unsigned short to: %hu \n", IleBitowUnsignedShort());
+                        break;
+
+                case '2':
+                    	printf("Podaj liczbe do zamiany na bity: ");
+                        scanf("%hu",&zmienna1);
+                        printf("Liczba %d bitowo to: \t",zmienna1);
+                        WypiszBitowo(zmienna1);
+                        break;
+                case '3':
+                    	printf("Podaj pierwsza liczbe do operacji bitowych: ");
+                        scanf("%hu",&zmienna1);
+                        printf("Podaj druga do operacji bitowych: ");
+                        scanf("%hu",&zmienna2);
+                        PodstawoweOperacjeBitowe(zmienna1, zmienna2);
+                        break;
+                case '4':
+                    	printf("Podaj liczbe do negacji bitowej: ");
+                        scanf("%hu",&zmienna1);
+                        printf("Liczba %d po negacji to %hu \n", zmienna1, Zmien(zmienna1));
+                        break;
+                case '5':
+                        printf("Podaj liczbe do negacji bitowej: ");
+                        scanf("%hu",&zmienna1);
+                        printf("Podaj poczatkowy bit (najmniej znaczacy to 1): ");
+                        scanf("%hu",&liczba1);
+                        printf("Podaj koncowy bit negacji: ");
+                        scanf("%hu",&liczba2);
+                        printf("Negacja liczby: %hu w wybranym przedziale przedziale to: %hu \n",zmienna1, ZamienPrzedzial(zmienna1,liczba1, liczba2));
+                        break;
+                case '6':
+                        printf("Podaj liczbe do cyklicznego przesuwania: ");
+                        scanf("%hu",&zmienna1);
+                        printf("Podaj ilosc cyklicznie przesuwanych bitow: ");
+                        scanf("%hu",&liczba1);
+                        printf("\n");
+                        ROR(zmienna1,liczba1);
+                        break;
+                default:
+                        printf("Brak opcji");
+                        break;
+
+
+
+            }
+
+		}
 }
